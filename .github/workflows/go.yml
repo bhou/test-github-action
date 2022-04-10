@@ -9,7 +9,23 @@ on:
 jobs:
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, macos-latest, unbuntu-latest]
+        include:
+        - os: macos-latest
+          GOOS: darwin
+          GOARCH: amd64
+          CGO_ENABLED: 1
+        - os: macos-latest
+          GOOS: darwin
+          GOARCH: arm
+          CGO_ENABLED: 1
+        - os: ubuntu-latest
+          GOOS: linux
+          GOARCH: amd64
+          CGO_ENABLED: 1
     steps:
     - uses: actions/checkout@v3
 
@@ -19,4 +35,5 @@ jobs:
         go-version: 1.17
 
     - name: Build
-      run: go build main.go
+      run: GOOS=${{matrix.GOOS}} GOARCH=${{matrix.GOARCH}} CGO_ENABLED=${{matrix.CGO_ENABLED}} go build main.go
+
