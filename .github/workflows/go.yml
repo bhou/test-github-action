@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, macos-latest, unbuntu-latest]
+        os: [macos-latest, macos-latest, ubuntu-latest]
         include:
         - os: macos-latest
           GOOS: darwin
@@ -20,7 +20,7 @@ jobs:
           CGO_ENABLED: 1
         - os: macos-latest
           GOOS: darwin
-          GOARCH: arm
+          GOARCH: arm64
           CGO_ENABLED: 1
         - os: ubuntu-latest
           GOOS: linux
