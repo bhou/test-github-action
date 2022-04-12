@@ -12,28 +12,27 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, macos-latest, ubuntu-latest]
+        arch: [amd64]
+        cgo: [1]
+        os: [macos-latest, ubuntu-latest, windows-latest]
         include:
         - os: macos-latest
           GOOS: darwin
-          GOARCH: amd64
-          CGO_ENABLED: 1
         - os: macos-latest
           GOOS: darwin
-          GOARCH: arm64
-          CGO_ENABLED: 1
+          arch: arm64
         - os: ubuntu-latest
           GOOS: linux
-          GOARCH: amd64
-          CGO_ENABLED: 1
+        - os: windows-latest
+          GOOS: windows
     steps:
     - uses: actions/checkout@v3
 
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
-        go-version: 1.17
+        go-version: 1.18
 
     - name: Build
-      run: GOOS=${{matrix.GOOS}} GOARCH=${{matrix.GOARCH}} CGO_ENABLED=${{matrix.CGO_ENABLED}} go build main.go
+      run: GOOS=${{matrix.GOOS}} GOARCH=${{matrix.arch}} CGO_ENABLED=${{matrix.cgo}} go build main.go
 
