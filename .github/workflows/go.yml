@@ -21,6 +21,7 @@ jobs:
         - os: macos-latest
           GOOS: darwin
           arch: arm64
+          cgo: 1
         - os: ubuntu-latest
           GOOS: linux
         - os: windows-latest
